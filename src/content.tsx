@@ -84,25 +84,25 @@ export const siteContent: SiteContent = {
         icon: Package,
         title: "Off-the-shelf software doesn't fit",
         description:
-          "You're paying for features you don't need and missing the ones you do. Your team wastes hours on workarounds.",
+          "You're paying monthly fees for bloated software packed with features you'll never use, while the specific functionality your business actually needs is nowhere to be found. Your team spends countless hours creating manual workarounds, exporting data to spreadsheets, and duct-taping processes together. This inefficiency costs you real money and slows down your growth every single day.",
       },
       {
         icon: Users,
         title: 'Finding good developers is exhausting',
         description:
-          "Freelancers ghost you. Agencies overcharge. Offshore teams deliver buggy code. You've been burned before.",
+          "You've tried freelancers who disappeared mid-project. You've worked with agencies that charged premium rates but delivered mediocre results. Offshore teams promised savings but delivered buggy, unmaintainable code that cost more to fix than it saved. The hiring process alone takes months, and even then there's no guarantee of quality. You need a reliable partner, not another gamble.",
       },
       {
         icon: Unplug,
         title: "Your systems don't talk to each other",
         description:
-          "Data lives in silos. Manual data entry eats up your team's time. Integration feels impossible.",
+          "Your CRM doesn't sync with your inventory system. Your accounting software can't pull data from your e-commerce platform. Customer information lives in five different places, and none of them agree. Your team wastes hours every week on manual data entry, copy-pasting between applications, and reconciling inconsistent records. These disconnected systems create errors, slow down operations, and frustrate everyone.",
       },
       {
         icon: Clock,
         title: 'Projects always go over budget and timeline',
         description:
-          '"It\'ll be ready in 2 weeks" turns into 2 months. Scope creep destroys your budget.',
+          "Every software project you've started has the same story: optimistic timelines that slip week after week, budgets that balloon with 'unexpected' requirements, and deliverables that don't match what was promised. Scope creep becomes the norm rather than the exception. You're left wondering if it's even possible to get a project delivered on time and on budget anymore.",
       },
     ],
   },
