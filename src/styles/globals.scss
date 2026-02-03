@@ -26,6 +26,7 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 // Typography
@@ -155,14 +156,61 @@ a {
   }
 }
 
-// Swiper customization
+// Enhanced Swiper customization
+.swiper {
+  padding-bottom: 3rem;
+}
+
+.swiper-pagination {
+  bottom: 0 !important;
+}
+
 .swiper-pagination-bullet {
-  background-color: $primary !important;
-  opacity: 0.3;
+  width: 10px;
+  height: 10px;
+  background-color: $dark !important;
+  opacity: 0.2;
+  transition: all 0.3s ease;
 
   &-active {
     opacity: 1;
+    background-color: $primary !important;
+    width: 28px;
+    border-radius: 5px;
   }
+}
+
+.swiper-slide {
+  transition: all 0.5s ease;
+
+  &:not(.swiper-slide-active) {
+    opacity: 0.5;
+    transform: scale(0.95);
+  }
+}
+
+// Glassmorphism utilities
+.glass {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-dark {
+  background: rgba(31, 41, 55, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+// Glow effects
+.glow-primary {
+  box-shadow: 0 0 40px rgba($primary, 0.3);
+}
+
+.glow-secondary {
+  box-shadow: 0 0 40px rgba($secondary, 0.3);
 }
 
 // Scrollbar customization
@@ -193,6 +241,33 @@ a {
 :focus-visible {
   outline: 2px solid $primary;
   outline-offset: 2px;
+}
+
+// Tailwind custom utilities layer
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animate-shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.4),
+      transparent
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 // Print styles

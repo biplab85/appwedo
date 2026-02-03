@@ -53,6 +53,26 @@ export const siteContent: SiteContent = {
       { value: '3', label: 'Continents Served' },
       { value: '100%', label: 'On-Time Delivery' },
     ],
+    slides: [
+      {
+        id: 1,
+        title: 'Web Dashboard',
+        description: 'Custom dashboards & portals',
+        type: 'web' as const,
+      },
+      {
+        id: 2,
+        title: 'Mobile Apps',
+        description: 'iOS & Android applications',
+        type: 'mobile' as const,
+      },
+      {
+        id: 3,
+        title: 'API Integration',
+        description: 'Connect your systems',
+        type: 'api' as const,
+      },
+    ],
   },
 
   problem: {

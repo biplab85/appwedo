@@ -16,12 +16,20 @@ export interface SocialProofStat {
   label: string;
 }
 
+export interface HeroSlide {
+  id: number;
+  title: string;
+  description: string;
+  type: 'web' | 'mobile' | 'api';
+}
+
 export interface HeroContent {
   headline: string;
   subheadline: string;
   primaryCTA: string;
   secondaryCTA: string;
   socialProof: SocialProofStat[];
+  slides: HeroSlide[];
 }
 
 export interface PainPoint {
