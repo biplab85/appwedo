@@ -1,0 +1,203 @@
+@use './variables' as *;
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// Import Comfortaa font from Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap');
+
+// Reset and base styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  font-family: $font-primary;
+  color: $text-primary;
+  background-color: $bg-white;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Typography
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  color: $dark;
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+h2 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+h3 {
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
+}
+
+p {
+  color: $text-secondary;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color $transition-normal;
+}
+
+// Skip to content link for accessibility
+.skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.75rem 1.5rem;
+  background-color: $primary;
+  color: white;
+  border-radius: $radius-md;
+  z-index: 100;
+  transition: top $transition-normal;
+
+  &:focus {
+    top: 1rem;
+  }
+}
+
+// Container utilities
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 $section-padding-x;
+}
+
+// Section utilities
+.section {
+  padding: $section-padding-y 0;
+}
+
+.section-light {
+  background-color: $bg-light;
+}
+
+.section-dark {
+  background-color: $dark;
+  color: white;
+
+  h1, h2, h3, h4, h5, h6 {
+    color: white;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+// Gradient backgrounds
+.gradient-primary {
+  background: linear-gradient(135deg, $primary 0%, $primary-dark 100%);
+}
+
+.gradient-secondary {
+  background: linear-gradient(135deg, $secondary 0%, $secondary-dark 100%);
+}
+
+// Text utilities
+.text-gradient {
+  background: linear-gradient(135deg, $primary 0%, $secondary 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// Animation utilities
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+
+  &.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Button base styles
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  font-family: $font-primary;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: $radius-lg;
+  border: none;
+  cursor: pointer;
+  transition: all $transition-normal;
+  text-decoration: none;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+// Swiper customization
+.swiper-pagination-bullet {
+  background-color: $primary !important;
+  opacity: 0.3;
+
+  &-active {
+    opacity: 1;
+  }
+}
+
+// Scrollbar customization
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: $bg-light;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $text-light;
+  border-radius: $radius-full;
+
+  &:hover {
+    background: $text-muted;
+  }
+}
+
+// Selection
+::selection {
+  background-color: rgba($primary, 0.2);
+  color: $primary-dark;
+}
+
+// Focus styles for accessibility
+:focus-visible {
+  outline: 2px solid $primary;
+  outline-offset: 2px;
+}
+
+// Print styles
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
