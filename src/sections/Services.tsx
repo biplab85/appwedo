@@ -173,7 +173,7 @@ export default function Services() {
           </div>
 
           <h2
-            className={`text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-5 leading-tight transition-all duration-700 delay-100 ${
+            className={`text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-5 leading-snug sm:leading-relaxed lg:leading-[1.3] transition-all duration-700 delay-100 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
