@@ -1,6 +1,7 @@
 import {
   Navigation,
   Hero,
+  HeroPremium,
   Problem,
   Solution,
   Services,
@@ -26,7 +27,8 @@ function App() {
       <Navigation />
 
       <main id="main-content">
-        <Hero />
+        <HeroPremium />
+        {/* <Hero /> */}
         <Problem />
         <About />
         {/* <Solution /> */}

@@ -327,7 +327,7 @@ export default function Navigation() {
 
         {/* Slide-in Contact Drawer */}
         <aside
-          className={`absolute top-0 right-0 w-full max-w-md h-full bg-white shadow-2xl transition-transform duration-500 ease-out flex flex-col ${
+          className={`drawerContainer absolute top-0 right-0 w-full max-w-md h-full bg-white shadow-2xl transition-transform duration-500 ease-out flex flex-col ${
             isContactDrawerOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
           role="dialog"

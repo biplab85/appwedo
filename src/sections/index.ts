@@ -1,5 +1,6 @@
 export { default as Navigation } from './Navigation';
 export { default as Hero } from './Hero';
+export { default as HeroPremium } from './HeroPremium';
 export { default as Problem } from './Problem';
 export { default as Solution } from './Solution';
 export { default as Services } from './Services';
