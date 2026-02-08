@@ -34,10 +34,11 @@ export const siteContent: SiteContent = {
   navigation: {
     logo: 'APPWEDO',
     navLinks: [
-      { label: 'Services', href: '#services' },
-      { label: 'Products', href: '#products' },
       { label: 'About', href: '#about' },
-      { label: 'Team', href: '#team' },
+      { label: 'Services', href: '#services' },
+      { label: 'How It Works', href: '#howItWork' },
+      { label: 'Products', href: '#products' },
+      { label: 'FAQ', href: '#faq' },
     ],
     ctaButton: 'Get a Free Quote',
   },

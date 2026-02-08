@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { X, ArrowRight, Mail, Phone, MapPin, MessageCircle } from 'lucide-react';
 import { Container } from '../components';
 import { siteContent } from '../content';
@@ -9,6 +9,8 @@ export default function Navigation() {
   const [isContactDrawerOpen, setIsContactDrawerOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('');
+  const indicatorRef = useRef<HTMLDivElement>(null);
+  const navContainerRef = useRef<HTMLDivElement>(null);
 
   // Handle scroll effect
   useEffect(() => {
@@ -38,6 +40,21 @@ export default function Navigation() {
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, [navLinks]);
+
+  // Animate the sliding indicator under the active nav link
+  useEffect(() => {
+    if (!navContainerRef.current || !indicatorRef.current) return;
+    const activeLink = navContainerRef.current.querySelector('[data-active="true"]') as HTMLElement;
+    if (activeLink) {
+      const containerRect = navContainerRef.current.getBoundingClientRect();
+      const linkRect = activeLink.getBoundingClientRect();
+      indicatorRef.current.style.width = `${linkRect.width}px`;
+      indicatorRef.current.style.left = `${linkRect.left - containerRect.left}px`;
+      indicatorRef.current.style.opacity = '1';
+    } else {
+      indicatorRef.current.style.opacity = '0';
+    }
+  }, [activeSection]);
 
   // Lock body scroll when menu or drawer is open
   useEffect(() => {
@@ -70,21 +87,65 @@ export default function Navigation() {
 
   return (
     <>
+      <style>{`
+        @keyframes nav-glow-pulse {
+          0%, 100% { opacity: 0.6; }
+          50% { opacity: 1; }
+        }
+        @keyframes nav-shimmer {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+        .nav-indicator-glow {
+          animation: nav-glow-pulse 2s ease-in-out infinite;
+        }
+        .nav-cta-shimmer::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+          animation: nav-shimmer 3s ease-in-out infinite;
+        }
+      `}</style>
+
       <header
         role="banner"
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled
-            ? 'py-3 bg-white/90 backdrop-blur-xl shadow-lg shadow-dark-900/5 border-b border-dark-100/50'
-            : 'py-4 bg-transparent'
-        }`}
+        className="fixed top-0 left-0 right-0 z-50"
+        style={{
+          padding: isScrolled ? '10px 0' : '16px 0',
+          background: isScrolled
+            ? 'linear-gradient(135deg, rgba(8,9,20,0.88) 0%, rgba(12,14,26,0.92) 50%, rgba(8,9,20,0.88) 100%)'
+            : 'transparent',
+          backdropFilter: isScrolled ? 'blur(20px) saturate(1.4)' : 'none',
+          WebkitBackdropFilter: isScrolled ? 'blur(20px) saturate(1.4)' : 'none',
+          borderBottom: isScrolled ? '1px solid rgba(139,92,246,0.08)' : '1px solid transparent',
+          boxShadow: isScrolled
+            ? '0 8px 32px rgba(0,0,0,0.4), 0 0 80px -20px rgba(139,92,246,0.08)'
+            : 'none',
+          transition: 'all 0.6s cubic-bezier(0.22, 1, 0.36, 1)',
+        }}
       >
+        {/* Top edge gradient line — only when scrolled */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: '10%',
+            right: '10%',
+            height: '1px',
+            background: 'linear-gradient(90deg, transparent, rgba(139,92,246,0.3) 30%, rgba(6,182,212,0.2) 70%, transparent)',
+            opacity: isScrolled ? 1 : 0,
+            transition: 'opacity 0.6s ease',
+          }}
+        />
+
         <Container>
           <nav
             className="flex items-center justify-between"
             role="navigation"
             aria-label="Main navigation"
           >
-            {/* Logo - Image Only */}
+            {/* Logo */}
             <a
               href="#"
               onClick={(e) => {
@@ -92,64 +153,95 @@ export default function Navigation() {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
               onKeyDown={(e) => handleKeyDown(e, () => window.scrollTo({ top: 0, behavior: 'smooth' }))}
-              className="group relative focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg"
+              className="group relative focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent rounded-lg"
               aria-label="AppWeDo - Go to homepage"
             >
               {/* Logo hover glow */}
-              <div className="absolute -inset-3 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-              {/* Official Logo Image */}
+              <div
+                className="absolute -inset-3 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{ background: 'linear-gradient(135deg, rgba(139,92,246,0.15), rgba(6,182,212,0.1))' }}
+              />
               <img
                 src="/images/appwedo-logo.png"
                 alt="AppWeDo"
                 className="relative h-10 sm:h-12 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
+                style={{ filter: 'brightness(1.1)' }}
               />
             </a>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-2" role="menubar">
+            <div
+              ref={navContainerRef}
+              className="hidden lg:flex items-center relative"
+              role="menubar"
+              style={{
+                background: isScrolled ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.06)',
+                borderRadius: '14px',
+                padding: '4px',
+              }}
+            >
+              {/* Sliding active indicator */}
+              <div
+                ref={indicatorRef}
+                className="absolute top-[4px] h-[calc(100%-8px)] rounded-[10px] transition-all duration-400 ease-out pointer-events-none"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(139,92,246,0.15) 0%, rgba(6,182,212,0.08) 100%)',
+                  border: '1px solid rgba(139,92,246,0.2)',
+                  boxShadow: '0 0 16px rgba(139,92,246,0.1), inset 0 1px 0 rgba(255,255,255,0.05)',
+                  opacity: 0,
+                  transitionProperty: 'left, width, opacity',
+                  transitionDuration: '0.4s',
+                  transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
+                }}
+              />
+
               {navLinks.map((link) => {
                 const isActive = activeSection === link.href.replace('#', '');
                 return (
                   <a
                     key={link.label}
                     href={link.href}
+                    data-active={isActive}
                     onClick={(e) => {
                       e.preventDefault();
                       scrollToSection(link.href);
                     }}
                     onKeyDown={(e) => handleKeyDown(e, () => scrollToSection(link.href))}
-                    className={`group relative px-4 py-2.5 text-sm font-medium rounded-xl transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
-                      isActive ? 'text-primary' : 'text-dark-600 hover:text-dark-900'
-                    }`}
+                    className="relative z-10 px-5 py-2.5 text-[13px] font-semibold tracking-wide rounded-[10px] transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
+                    style={{
+                      color: isActive ? '#c4b5fd' : 'rgba(255,255,255,0.5)',
+                      textShadow: isActive ? '0 0 20px rgba(139,92,246,0.4)' : 'none',
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isActive) {
+                        e.currentTarget.style.color = 'rgba(255,255,255,0.85)';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isActive) {
+                        e.currentTarget.style.color = 'rgba(255,255,255,0.5)';
+                      }
+                    }}
                     role="menuitem"
                     aria-current={isActive ? 'page' : undefined}
                   >
-                    {/* Background highlight */}
-                    <span
-                      className={`absolute inset-0 rounded-xl transition-all duration-300 ${
-                        isActive
-                          ? 'bg-primary/10'
-                          : 'bg-transparent group-hover:bg-dark-100/70'
-                      }`}
-                    />
-
-                    {/* Link text */}
-                    <span className="relative z-10">{link.label}</span>
-
-                    {/* Active indicator */}
-                    <span
-                      className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primary transition-all duration-300 ${
-                        isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-0'
-                      }`}
-                    />
+                    {link.label}
                   </a>
                 );
               })}
+
+              {/* Bottom edge glow under active item */}
+              <div
+                className="absolute -bottom-[1px] left-0 right-0 h-[1px] pointer-events-none"
+                style={{
+                  background: 'linear-gradient(90deg, transparent 10%, rgba(139,92,246,0.15) 50%, transparent 90%)',
+                }}
+              />
             </div>
 
-            {/* Desktop CTA Button & Contact Drawer Toggle */}
-            <div className="hidden lg:flex items-center gap-2">
+            {/* Desktop CTA + Contact Drawer Toggle */}
+            <div className="hidden lg:flex items-center gap-3">
               <a
                 href="#contact"
                 onClick={(e) => {
@@ -157,17 +249,18 @@ export default function Navigation() {
                   scrollToSection('#contact');
                 }}
                 onKeyDown={(e) => handleKeyDown(e, () => scrollToSection('#contact'))}
-                className="group relative inline-flex items-center gap-2 px-6 py-3 overflow-hidden rounded-xl font-semibold text-sm text-white transition-all duration-300 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                className="nav-cta-shimmer group relative inline-flex items-center gap-2 px-6 py-2.5 overflow-hidden rounded-xl font-semibold text-sm text-white transition-all duration-300 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
+                style={{
+                  background: 'linear-gradient(135deg, #8B5CF6 0%, #7C3AED 50%, #6D28D9 100%)',
+                  boxShadow: '0 4px 20px -4px rgba(139,92,246,0.5), 0 0 0 1px rgba(139,92,246,0.2)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 8px 32px -4px rgba(139,92,246,0.6), 0 0 0 1px rgba(139,92,246,0.4)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = '0 4px 20px -4px rgba(139,92,246,0.5), 0 0 0 1px rgba(139,92,246,0.2)';
+                }}
               >
-                {/* Gradient background */}
-                <span className="absolute inset-0 bg-gradient-to-r from-primary to-primary-600 transition-all duration-300 group-hover:from-primary-600 group-hover:to-primary" />
-
-                {/* Shine effect */}
-                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-
-                {/* Glow */}
-                <span className="absolute -inset-1 bg-primary/30 blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
                 <span className="relative z-10">{ctaButton}</span>
                 <ArrowRight className="relative z-10 w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300" />
               </a>
@@ -175,10 +268,24 @@ export default function Navigation() {
               {/* Contact Drawer Toggle Button */}
               <button
                 onClick={() => setIsContactDrawerOpen(true)}
-                className="group relative w-12 h-12 flex items-center justify-center rounded-xl bg-secondary/10 hover:bg-secondary/20 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2"
+                className="group relative w-11 h-11 flex items-center justify-center rounded-xl transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500"
+                style={{
+                  background: 'rgba(6,182,212,0.08)',
+                  border: '1px solid rgba(6,182,212,0.15)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'rgba(6,182,212,0.15)';
+                  e.currentTarget.style.borderColor = 'rgba(6,182,212,0.3)';
+                  e.currentTarget.style.boxShadow = '0 0 20px rgba(6,182,212,0.15)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'rgba(6,182,212,0.08)';
+                  e.currentTarget.style.borderColor = 'rgba(6,182,212,0.15)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
                 aria-label="Open contact drawer"
               >
-                <MessageCircle className="w-5 h-5 text-secondary group-hover:scale-110 transition-transform duration-300" />
+                <MessageCircle className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" style={{ color: '#06B6D4' }} />
               </button>
             </div>
 
@@ -186,26 +293,37 @@ export default function Navigation() {
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               onKeyDown={(e) => handleKeyDown(e, () => setIsMenuOpen(!isMenuOpen))}
-              className="lg:hidden relative w-12 h-12 flex items-center justify-center rounded-xl bg-dark-100/50 hover:bg-dark-100 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              className="lg:hidden relative w-12 h-12 flex items-center justify-center rounded-xl transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
+              style={{
+                background: 'rgba(255,255,255,0.05)',
+                border: '1px solid rgba(255,255,255,0.08)',
+              }}
               aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
               aria-expanded={isMenuOpen}
               aria-controls="mobile-menu"
             >
               <div className="relative w-6 h-6">
                 <span
-                  className={`absolute left-0 top-1 w-6 h-0.5 bg-dark-700 rounded-full transition-all duration-300 ${
-                    isMenuOpen ? 'rotate-45 top-[11px]' : ''
-                  }`}
+                  className="absolute left-0 top-1 w-6 h-0.5 rounded-full transition-all duration-300"
+                  style={{
+                    background: isMenuOpen ? '#8B5CF6' : 'rgba(255,255,255,0.7)',
+                    transform: isMenuOpen ? 'rotate(45deg) translateY(6px)' : 'none',
+                  }}
                 />
                 <span
-                  className={`absolute left-0 top-[11px] w-6 h-0.5 bg-dark-700 rounded-full transition-all duration-300 ${
-                    isMenuOpen ? 'opacity-0 scale-0' : ''
-                  }`}
+                  className="absolute left-0 top-[11px] w-6 h-0.5 rounded-full transition-all duration-300"
+                  style={{
+                    background: 'rgba(255,255,255,0.7)',
+                    opacity: isMenuOpen ? 0 : 1,
+                    transform: isMenuOpen ? 'scaleX(0)' : 'scaleX(1)',
+                  }}
                 />
                 <span
-                  className={`absolute left-0 bottom-1 w-6 h-0.5 bg-dark-700 rounded-full transition-all duration-300 ${
-                    isMenuOpen ? '-rotate-45 bottom-[11px]' : ''
-                  }`}
+                  className="absolute left-0 bottom-1 w-6 h-0.5 rounded-full transition-all duration-300"
+                  style={{
+                    background: isMenuOpen ? '#06B6D4' : 'rgba(255,255,255,0.7)',
+                    transform: isMenuOpen ? 'rotate(-45deg) translateY(-6px)' : 'none',
+                  }}
                 />
               </div>
             </button>
@@ -223,38 +341,63 @@ export default function Navigation() {
       >
         {/* Backdrop */}
         <div
-          className="absolute inset-0 bg-dark-900/60 backdrop-blur-sm"
+          className="absolute inset-0 bg-black/70 backdrop-blur-md"
           onClick={() => setIsMenuOpen(false)}
           aria-hidden="true"
         />
 
-        {/* Slide-in Menu Panel */}
+        {/* Slide-in Menu Panel — Dark Premium */}
         <aside
-          className={`absolute top-0 right-0 w-full max-w-sm h-full bg-white shadow-2xl transition-transform duration-500 ease-out flex flex-col ${
+          className={`absolute top-0 right-0 w-full max-w-sm h-full shadow-2xl transition-transform duration-500 ease-out flex flex-col ${
             isMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
+          style={{
+            background: 'linear-gradient(180deg, #0c0e1a 0%, #0a0b18 40%, #080914 100%)',
+          }}
           role="dialog"
           aria-modal="true"
           aria-label="Navigation menu"
         >
+          {/* Left edge accent line */}
+          <div
+            className="absolute top-0 left-0 w-[1px] h-full pointer-events-none"
+            style={{
+              background: 'linear-gradient(180deg, transparent 0%, rgba(139,92,246,0.3) 30%, rgba(6,182,212,0.2) 60%, transparent 100%)',
+            }}
+          />
+
           {/* Menu Header */}
-          <div className="flex items-center justify-between p-6 border-b border-dark-100">
+          <div
+            className="relative flex items-center justify-between p-6"
+            style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}
+          >
+            <div
+              className="absolute inset-0 opacity-40 pointer-events-none"
+              style={{
+                background: 'radial-gradient(ellipse 70% 100% at 30% 0%, rgba(139,92,246,0.08) 0%, transparent 70%)',
+              }}
+            />
             <img
               src="/images/appwedo-logo.png"
               alt="AppWeDo"
-              className="h-10 w-auto"
+              className="relative h-10 w-auto"
+              style={{ filter: 'brightness(1.1)' }}
             />
             <button
               onClick={() => setIsMenuOpen(false)}
-              className="w-10 h-10 flex items-center justify-center rounded-lg bg-dark-100/50 hover:bg-dark-100 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className="relative w-10 h-10 flex items-center justify-center rounded-lg transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
+              style={{
+                background: 'rgba(255,255,255,0.05)',
+                border: '1px solid rgba(255,255,255,0.08)',
+              }}
               aria-label="Close menu"
             >
-              <X className="w-5 h-5 text-dark-600" />
+              <X className="w-5 h-5" style={{ color: 'rgba(255,255,255,0.6)' }} />
             </button>
           </div>
 
           {/* Menu Links */}
-          <nav className="flex-1 p-6 space-y-2 overflow-y-auto" role="navigation">
+          <nav className="flex-1 p-6 space-y-1.5 overflow-y-auto" role="navigation">
             {navLinks.map((link, index) => {
               const isActive = activeSection === link.href.replace('#', '');
               return (
@@ -265,48 +408,108 @@ export default function Navigation() {
                     e.preventDefault();
                     scrollToSection(link.href);
                   }}
-                  className={`group flex items-center justify-between p-4 rounded-xl transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
-                    isActive
-                      ? 'bg-primary/10 text-primary'
-                      : 'hover:bg-dark-50 text-dark-700 hover:text-dark-900'
-                  }`}
+                  className="group relative flex items-center justify-between p-4 rounded-xl overflow-hidden transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
                   style={{
-                    transitionDelay: isMenuOpen ? `${index * 50 + 100}ms` : '0ms',
-                    transform: isMenuOpen ? 'translateX(0)' : 'translateX(20px)',
+                    background: isActive ? 'rgba(139,92,246,0.1)' : 'rgba(255,255,255,0.02)',
+                    border: isActive ? '1px solid rgba(139,92,246,0.2)' : '1px solid transparent',
+                    transitionDelay: isMenuOpen ? `${index * 60 + 100}ms` : '0ms',
+                    transform: isMenuOpen ? 'translateX(0)' : 'translateX(30px)',
                     opacity: isMenuOpen ? 1 : 0,
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.background = 'rgba(255,255,255,0.04)';
+                      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.background = 'rgba(255,255,255,0.02)';
+                      e.currentTarget.style.borderColor = 'transparent';
+                    }
                   }}
                   aria-current={isActive ? 'page' : undefined}
                 >
-                  <span className="text-lg font-medium">{link.label}</span>
+                  {/* Active left accent bar */}
+                  {isActive && (
+                    <div
+                      className="absolute left-0 top-2 bottom-2 w-[3px] rounded-full nav-indicator-glow"
+                      style={{
+                        background: 'linear-gradient(180deg, #8B5CF6, #06B6D4)',
+                      }}
+                    />
+                  )}
+
+                  <span
+                    className="text-base font-semibold tracking-wide"
+                    style={{
+                      color: isActive ? '#c4b5fd' : 'rgba(255,255,255,0.6)',
+                      paddingLeft: isActive ? '8px' : '0',
+                      transition: 'all 0.3s ease',
+                    }}
+                  >
+                    {link.label}
+                  </span>
                   <ArrowRight
-                    className={`w-5 h-5 transition-all duration-300 ${
-                      isActive
-                        ? 'opacity-100 translate-x-0'
-                        : 'opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0'
-                    }`}
+                    className="w-4 h-4 transition-all duration-300"
+                    style={{
+                      color: isActive ? '#8B5CF6' : 'rgba(255,255,255,0.2)',
+                      opacity: isActive ? 1 : 0,
+                      transform: isActive ? 'translateX(0)' : 'translateX(-8px)',
+                    }}
                   />
                 </a>
               );
             })}
           </nav>
 
+          {/* Divider */}
+          <div
+            className="mx-6 h-[1px]"
+            style={{
+              background: 'linear-gradient(90deg, transparent, rgba(139,92,246,0.15) 50%, transparent)',
+            }}
+          />
+
           {/* Mobile CTA */}
-          <div className="p-6 border-t border-dark-100 bg-dark-50/50">
+          <div className="p-6">
             <a
               href="#contact"
               onClick={(e) => {
                 e.preventDefault();
                 scrollToSection('#contact');
               }}
-              className="group flex items-center justify-center gap-2 w-full py-4 bg-gradient-to-r from-primary to-primary-600 rounded-xl font-semibold text-white shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              className="group relative flex items-center justify-center gap-2 w-full py-4 rounded-xl font-semibold text-white overflow-hidden transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
               style={{
-                transitionDelay: isMenuOpen ? '300ms' : '0ms',
+                background: 'linear-gradient(135deg, #8B5CF6 0%, #7C3AED 50%, #6D28D9 100%)',
+                boxShadow: '0 8px 24px -4px rgba(139,92,246,0.4), 0 0 0 1px rgba(139,92,246,0.2)',
+                transitionDelay: isMenuOpen ? '350ms' : '0ms',
+                opacity: isMenuOpen ? 1 : 0,
+                transform: isMenuOpen ? 'translateY(0)' : 'translateY(10px)',
+              }}
+            >
+              <span className="relative z-10">{ctaButton}</span>
+              <ArrowRight className="relative z-10 w-5 h-5 group-hover:translate-x-0.5 transition-transform duration-300" />
+            </a>
+
+            {/* Contact drawer shortcut for mobile */}
+            <button
+              onClick={() => {
+                setIsMenuOpen(false);
+                setTimeout(() => setIsContactDrawerOpen(true), 300);
+              }}
+              className="mt-3 w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium transition-all duration-300"
+              style={{
+                color: 'rgba(255,255,255,0.4)',
+                background: 'rgba(255,255,255,0.03)',
+                border: '1px solid rgba(255,255,255,0.06)',
+                transitionDelay: isMenuOpen ? '400ms' : '0ms',
                 opacity: isMenuOpen ? 1 : 0,
               }}
             >
-              {ctaButton}
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform duration-300" />
-            </a>
+              <MessageCircle className="w-4 h-4" style={{ color: '#06B6D4' }} />
+              Quick Contact
+            </button>
           </div>
         </aside>
       </div>
