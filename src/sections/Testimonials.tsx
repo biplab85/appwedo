@@ -84,6 +84,14 @@ export default function Testimonials() {
           <circle cx="960" cy="400" r="300" fill="url(#testBurst)" />
         </svg>
 
+        {/* Large double-stroke quotes watermark — top left */}
+        <svg className="absolute top-0 left-0 w-[500px] h-[500px]" style={{ zIndex: 1, opacity: isVisible ? 0.07 : 0, transform: isVisible ? 'scale(1)' : 'scale(0.8)', transition: 'opacity 1.2s ease, transform 1.2s ease' }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+          <text x="20" y="380" fontSize="550" fontWeight="900" fontFamily="Georgia, serif"
+            fill="none" stroke="#F59E0B" strokeWidth="4">{'\u201C'}</text>
+          <text x="20" y="380" fontSize="550" fontWeight="900" fontFamily="Georgia, serif"
+            fill="none" stroke="#FCD34D" strokeWidth="1.5" strokeDasharray="14 8">{'\u201C'}</text>
+        </svg>
+
         {/* Ambient orbs — warm gold + cool blue contrast */}
         <div className="absolute -top-32 right-1/4 w-[550px] h-[550px] rounded-full opacity-[0.07] blur-[120px] test-orb-a"
           style={{ background: 'radial-gradient(circle, rgba(245,158,11,0.6) 0%, transparent 70%)' }}

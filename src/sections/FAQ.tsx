@@ -93,6 +93,14 @@ export default function FAQ() {
           <rect width="100%" height="100%" fill="url(#faqHex)" />
         </svg>
 
+        {/* Large double-stroke "?" watermark */}
+        <svg className="absolute top-1/2 right-0 -translate-y-1/2 w-[700px] h-[700px]" style={{ zIndex: 1, opacity: isVisible ? 0.07 : 0, transform: isVisible ? 'translateY(-50%) scale(1)' : 'translateY(-50%) scale(0.8)', transition: 'opacity 1.2s ease, transform 1.2s ease' }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 700">
+          <text x="300" y="520" textAnchor="middle" fontSize="700" fontWeight="900" fontFamily="Arial, sans-serif"
+            fill="none" stroke="#6366F1" strokeWidth="4">?</text>
+          <text x="300" y="520" textAnchor="middle" fontSize="700" fontWeight="900" fontFamily="Arial, sans-serif"
+            fill="none" stroke="#A855F7" strokeWidth="1.5" strokeDasharray="14 8">?</text>
+        </svg>
+
         {/* Ambient orbs */}
         <div className="absolute -top-40 left-1/4 w-[550px] h-[550px] rounded-full opacity-[0.07] blur-[130px] faq-orb-a"
           style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.6) 0%, transparent 70%)' }}
