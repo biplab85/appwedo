@@ -21,7 +21,6 @@ export default function Footer() {
                 alt="AppWeDo"
                 className="h-10 w-auto brightness-0 invert"
               />
-              APPWEDO
             </a>
             <p className="text-white/60 leading-relaxed">{tagline}</p>
           </div>

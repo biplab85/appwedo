@@ -271,6 +271,49 @@ export const siteContent: SiteContent = {
     ],
   },
 
+  about: {
+    label: 'About Us',
+    headline: 'Built by Builders, for Builders',
+    subheadline:
+      'We started AppWeDo with a simple belief — every business deserves software that works the way they do, not the other way around.',
+    story: [
+      "AppWeDo was born from a frustration we experienced firsthand. As developers who worked inside enterprises, agencies, and startups, we kept seeing the same pattern: businesses forced to bend their workflows around rigid, off-the-shelf tools. Talented teams wasting hours on manual workarounds. Promising projects derailed by unreliable vendors.",
+      "We founded AppWeDo to be the development partner we always wished existed — one that listens first, delivers on time, and sticks around long after launch. Today, we serve clients across three continents, building everything from elegant mobile apps to complex enterprise platforms. Every project starts with understanding your problem — and ends with a solution that actually solves it.",
+    ],
+    mission:
+      'To empower businesses of every size with custom-built technology that eliminates friction, automates workflows, and unlocks growth — delivered by a team that treats your success as our own.',
+    vision:
+      'A world where every business has access to software engineered for their unique needs — not forced into a one-size-fits-all box. We envision technology as an accelerator, not a bottleneck.',
+    values: [
+      {
+        title: 'Precision Over Speed',
+        description:
+          'We never rush to ship. Every feature is tested, reviewed, and refined until it meets our quality bar.',
+      },
+      {
+        title: 'Radical Transparency',
+        description:
+          'No hidden fees, no scope surprises. You see progress weekly and know exactly where your investment goes.',
+      },
+      {
+        title: 'Partnership Mindset',
+        description:
+          "We don't just write code and disappear. We become an extension of your team for the long haul.",
+      },
+      {
+        title: 'Continuous Improvement',
+        description:
+          'Technology evolves — and so do we. We stay current so your products stay competitive.',
+      },
+    ],
+    stats: [
+      { value: '50+', label: 'Projects Delivered' },
+      { value: '3', label: 'Continents Served' },
+      { value: '100%', label: 'On-Time Delivery' },
+      { value: '24/7', label: 'Support Available' },
+    ],
+  },
+
   testimonials: {
     label: 'Client Success Stories',
     headline: 'Trusted by Businesses Worldwide',

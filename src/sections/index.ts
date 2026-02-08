@@ -6,6 +6,7 @@ export { default as Services } from './Services';
 export { default as Benefits } from './Benefits';
 export { default as ActionPlan } from './ActionPlan';
 export { default as Products } from './Products';
+export { default as About } from './About';
 export { default as Testimonials } from './Testimonials';
 export { default as FAQ } from './FAQ';
 export { default as SpecialOffer } from './SpecialOffer';

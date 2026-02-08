@@ -7,6 +7,7 @@ import {
   Benefits,
   ActionPlan,
   Products,
+  About,
   Testimonials,
   FAQ,
   SpecialOffer,
@@ -27,14 +28,14 @@ function App() {
       <main id="main-content">
         <Hero />
         <Problem />
-        <Solution />
+        <About />
+        {/* <Solution /> */}
         <Services />
         <Benefits />
         <ActionPlan />
-        <Products />
+        <Products />        
         <Testimonials />
         <FAQ />
-        <SpecialOffer />
         <FinalCTA />
       </main>
 

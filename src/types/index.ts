@@ -131,6 +131,27 @@ export interface FAQContent {
   faqs: FAQItem[];
 }
 
+export interface AboutValue {
+  title: string;
+  description: string;
+}
+
+export interface AboutStat {
+  value: string;
+  label: string;
+}
+
+export interface AboutContent {
+  label: string;
+  headline: string;
+  subheadline: string;
+  story: string[];
+  mission: string;
+  vision: string;
+  values: AboutValue[];
+  stats: AboutStat[];
+}
+
 export interface SpecialOfferContent {
   headline: string;
   offer: string;
@@ -176,6 +197,7 @@ export interface SiteContent {
   benefits: BenefitsContent;
   actionPlan: ActionPlanContent;
   products: ProductsContent;
+  about: AboutContent;
   testimonials: TestimonialsContent;
   faq: FAQContent;
   specialOffer: SpecialOfferContent;
