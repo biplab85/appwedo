@@ -214,7 +214,7 @@ export default function HeroPremium() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden"
+      className="relative lg:min-h-screen flex items-center pt-[7.5rem] pb-10 lg:pt-24 lg:pb-16 overflow-hidden"
     >
       {/* ===== Background ===== */}
       <div className="absolute inset-0 pointer-events-none">
@@ -338,7 +338,7 @@ export default function HeroPremium() {
 
       {/* ===== Content ===== */}
       <Container className="relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* ── Left: Content ── */}
           <div className="text-center lg:text-left">
             {/* Badge */}
@@ -578,7 +578,7 @@ export default function HeroPremium() {
               </div>
 
               {/* Card content */}
-              <div className="p-6 lg:p-8">
+              <div className="p-4 sm:p-6 lg:p-8">
                 {/* Active card header */}
                 <div className="flex items-center gap-4 mb-6">
                   <div
@@ -599,11 +599,10 @@ export default function HeroPremium() {
 
                 {/* Code area with typewriter effect */}
                 <div
-                  className="CodeSection rounded-xl p-4 mb-5 overflow-hidden"
+                  className="CodeSection rounded-xl p-3 sm:p-4 mb-4 sm:mb-5 overflow-hidden"
                   style={{
                     background: 'rgba(0,0,0,0.35)',
                     border: '1px solid rgba(255,255,255,0.04)',
-                    minHeight: 220,
                   }}
                 >
                   {/* Language badge */}
@@ -626,7 +625,7 @@ export default function HeroPremium() {
                   </div>
 
                   {/* Typewriter code */}
-                  <div className="font-mono text-[11px] sm:text-xs leading-[1.7]">
+                  <div className="font-mono text-[9px] sm:text-xs leading-[1.6] sm:leading-[1.7]">
                     {(() => {
                       let charCount = 0;
                       return currentSnippet.map((line, li) => {
@@ -643,7 +642,7 @@ export default function HeroPremium() {
                           >
                             {/* Line number */}
                             <span
-                              className="w-6 text-right mr-3 select-none flex-shrink-0"
+                              className="w-4 sm:w-6 text-right mr-2 sm:mr-3 select-none flex-shrink-0"
                               style={{ color: lineVisible ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.06)' }}
                             >
                               {li + 1}
@@ -814,6 +813,9 @@ export default function HeroPremium() {
           0%,100%{background-position:0% 50%}
           50%{background-position:100% 50%}
         }
+
+        .CodeSection { min-height: 140px; }
+        @media (min-width: 640px) { .CodeSection { min-height: 220px; } }
 
         ${particles.map((p, i) => `
           .hero-p-float-${i}{animation:heroPF${i} ${p.dur} ease-in-out infinite}

@@ -388,14 +388,15 @@ export default function Navigation() {
             </div>
             <button
               onClick={() => setIsMenuOpen(false)}
-              className="relative w-10 h-10 flex items-center justify-center rounded-lg transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
+              className="relative w-11 h-11 flex items-center justify-center rounded-xl transition-all duration-300 active:scale-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
               style={{
-                background: 'rgba(255,255,255,0.05)',
-                border: '1px solid rgba(255,255,255,0.08)',
+                background: 'linear-gradient(135deg, rgba(239,68,68,0.08) 0%, rgba(239,68,68,0.04) 100%)',
+                border: '1px solid rgba(239,68,68,0.15)',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
               }}
               aria-label="Close menu"
             >
-              <X className="w-5 h-5" style={{ color: 'rgba(255,255,255,0.6)' }} />
+              <X className="w-[22px] h-[22px]" style={{ color: 'rgba(239,68,68,0.75)' }} strokeWidth={2.5} />
             </button>
           </div>
 

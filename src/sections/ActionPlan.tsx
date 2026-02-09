@@ -198,7 +198,7 @@ export default function ActionPlan() {
           </div>
 
           {/* Mobile vertical connector */}
-          <div className="lg:hidden absolute left-[39px] sm:left-[47px] top-[80px] bottom-[80px] w-[3px] z-0">
+          <div className="hidden absolute left-[39px] sm:left-[47px] top-[80px] bottom-[80px] w-[3px] z-0">
             <div className="absolute inset-0 rounded-full" style={{ background: 'rgba(255,255,255,0.04)' }} />
             <div
               className="absolute inset-x-0 top-0 rounded-full"
@@ -229,59 +229,89 @@ export default function ActionPlan() {
                   onMouseLeave={() => setActiveStep(null)}
                 >
                   {/* ——— Mobile / Tablet layout ——— */}
-                  <div className="lg:hidden py-4">
-                    <div className="flex gap-4 sm:gap-5">
-                      {/* Number node on the timeline */}
-                      <div className="relative flex-shrink-0 z-10">
-                        <div
-                          className="w-[56px] h-[56px] sm:w-[64px] sm:h-[64px] rounded-2xl flex items-center justify-center transition-all duration-500"
-                          style={{
-                            background: isActive
-                              ? `linear-gradient(135deg, ${accent.color}, ${accent.color}bb)`
-                              : `rgba(${accent.rgb}, 0.08)`,
-                            border: `2px solid ${isActive ? accent.color : `rgba(${accent.rgb}, 0.2)`}`,
-                            boxShadow: isActive
-                              ? `0 8px 28px rgba(${accent.rgb}, 0.35)`
-                              : 'none',
-                          }}
-                        >
-                          <span
-                            className="text-xl sm:text-2xl font-bold transition-colors duration-500"
-                            style={{ color: isActive ? '#fff' : accent.color }}
-                          >
-                            0{step.number}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Card body */}
+                  <div className="lg:hidden">
+                    <div
+                      className="relative rounded-2xl overflow-hidden"
+                      style={{
+                        background: `linear-gradient(160deg, rgba(${accent.rgb}, 0.07) 0%, rgba(255,255,255,0.025) 50%, rgba(${accent.rgb}, 0.04) 100%)`,
+                        border: `1px solid rgba(${accent.rgb}, 0.15)`,
+                        backdropFilter: 'blur(12px)',
+                        WebkitBackdropFilter: 'blur(12px)',
+                      }}
+                    >
+                      {/* Top accent bar */}
                       <div
-                        className="flex-1 min-w-0 rounded-xl p-4 sm:p-5 transition-all duration-500"
-                        style={{
-                          background: isActive
-                            ? `linear-gradient(160deg, rgba(${accent.rgb}, 0.08) 0%, rgba(255,255,255,0.03) 100%)`
-                            : 'rgba(255,255,255,0.025)',
-                          border: `1px solid ${isActive ? `rgba(${accent.rgb}, 0.25)` : 'rgba(255,255,255,0.04)'}`,
-                          boxShadow: isActive
-                            ? `0 12px 32px -8px rgba(0,0,0,0.4)`
-                            : 'none',
-                        }}
-                      >
-                        <div className="flex items-center gap-2 mb-2.5">
-                          <StepIcon className="w-4 h-4 flex-shrink-0" style={{ color: accent.color }} />
-                          <span className="text-[11px] font-bold uppercase tracking-[0.12em]" style={{ color: accent.color }}>
-                            {accent.label}
+                        className="h-[3px] w-full"
+                        style={{ background: `linear-gradient(90deg, ${accent.color}, ${accent.color}55)` }}
+                      />
+
+                      <div className="p-5 relative overflow-hidden">
+                        {/* Large watermark number */}
+                        <div
+                          className="absolute -top-3 right-3 text-[80px] font-black leading-none select-none pointer-events-none"
+                          style={{ color: `rgba(${accent.rgb}, 0.06)` }}
+                        >
+                          {step.number}
+                        </div>
+
+                        {/* Phase badge */}
+                        <div className="flex items-center gap-2.5 mb-3">
+                          <div
+                            className="w-9 h-9 rounded-xl flex items-center justify-center"
+                            style={{
+                              background: `rgba(${accent.rgb}, 0.1)`,
+                              border: `1px solid rgba(${accent.rgb}, 0.2)`,
+                              boxShadow: `0 4px 12px rgba(${accent.rgb}, 0.1)`,
+                            }}
+                          >
+                            <StepIcon className="w-4 h-4" style={{ color: accent.color }} />
+                          </div>
+                          <span
+                            className="text-[11px] font-bold uppercase tracking-[0.12em]"
+                            style={{ color: accent.color }}
+                          >
+                            Step {step.number} &mdash; {accent.label}
                           </span>
                         </div>
-                        <h3 className="text-lg sm:text-xl font-bold text-white mb-2 leading-snug">{step.title}</h3>
+
+                        {/* Title */}
+                        <h3 className="text-lg font-bold text-white mb-2 leading-snug relative z-10">
+                          {step.title}
+                        </h3>
+
+                        {/* Description */}
                         <p
-                          className="text-sm leading-relaxed transition-colors duration-500"
-                          style={{ color: isActive ? 'rgba(255,255,255,0.72)' : 'rgba(255,255,255,0.42)' }}
+                          className="text-sm leading-relaxed relative z-10"
+                          style={{ color: 'rgba(255,255,255,0.55)' }}
                         >
                           {step.description}
                         </p>
                       </div>
                     </div>
+
+                    {/* Connector between steps */}
+                    {index < steps.length - 1 && (
+                      <div className="flex justify-center py-2">
+                        <div className="flex flex-col items-center">
+                          <div
+                            className="w-[2px] h-5 rounded-full"
+                            style={{
+                              background: `linear-gradient(180deg, rgba(${accent.rgb}, 0.3), rgba(${stepAccents[index + 1].rgb}, 0.3))`,
+                            }}
+                          />
+                          <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                            <path
+                              d="M1 1L6 6L11 1"
+                              stroke={stepAccents[index + 1].color}
+                              strokeOpacity="0.35"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   {/* ——— Desktop layout — single unified card ——— */}
