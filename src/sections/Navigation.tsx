@@ -303,7 +303,7 @@ export default function Navigation() {
             >
               <div className="relative w-6 h-6">
                 <span
-                  className="absolute left-0 top-1 w-6 h-0.5 rounded-full transition-all duration-300"
+                  className="absolute left-0 top-[9px] w-6 h-0.5 rounded-full transition-all duration-300"
                   style={{
                     background: isMenuOpen ? '#8B5CF6' : 'rgba(255,255,255,0.7)',
                     transform: isMenuOpen ? 'rotate(45deg) translateY(6px)' : 'none',
