@@ -1,9 +1,7 @@
 import {
   Navigation,
-  Hero,
   HeroPremium,
   Problem,
-  Solution,
   Services,
   Benefits,
   ActionPlan,
@@ -12,7 +10,6 @@ import {
   Team,
   Testimonials,
   FAQ,
-  SpecialOffer,
   FinalCTA,
   Footer,
 } from './sections';

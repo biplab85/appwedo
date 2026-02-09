@@ -17,10 +17,13 @@ export default function Footer() {
               className="text-2xl font-bold text-white flex items-center gap-2 mb-4"
             >
               <img
-                src="/images/appwedo-logo.png"
-                alt="AppWeDo"
-                className="h-10 w-auto brightness-0 invert"
+                src="/images/fevicon.png"
+                alt=""
+                className="h-8 w-auto object-contain"
               />
+              <span className="text-xl sm:text-2xl font-bold text-white" style={{ fontFamily: "'Comfortaa', cursive" }}>
+                appwedo
+              </span>
             </a>
             <p className="text-white/60 leading-relaxed">{tagline}</p>
           </div>
