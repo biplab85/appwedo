@@ -188,6 +188,25 @@ export interface FooterContent {
   copyright: string;
 }
 
+export interface TeamSocial {
+  platform: 'facebook' | 'twitter' | 'linkedin' | 'github' | 'instagram';
+  url: string;
+}
+
+export interface TeamMember {
+  name: string;
+  role: string;
+  image: string;
+  socials: TeamSocial[];
+}
+
+export interface TeamContent {
+  label: string;
+  headline: string;
+  subheadline: string;
+  members: TeamMember[];
+}
+
 export interface SiteContent {
   navigation: NavigationContent;
   hero: HeroContent;
@@ -198,6 +217,7 @@ export interface SiteContent {
   actionPlan: ActionPlanContent;
   products: ProductsContent;
   about: AboutContent;
+  team: TeamContent;
   testimonials: TestimonialsContent;
   faq: FAQContent;
   specialOffer: SpecialOfferContent;

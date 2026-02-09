@@ -153,20 +153,19 @@ export default function Navigation() {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
               onKeyDown={(e) => handleKeyDown(e, () => window.scrollTo({ top: 0, behavior: 'smooth' }))}
-              className="group relative focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent rounded-lg"
+              className="relative focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent rounded-lg"
               aria-label="AppWeDo - Go to homepage"
             >
-              {/* Logo hover glow */}
-              <div
-                className="absolute -inset-3 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{ background: 'linear-gradient(135deg, rgba(139,92,246,0.15), rgba(6,182,212,0.1))' }}
-              />
-              <img
-                src="/images/appwedo-logo.png"
-                alt="AppWeDo"
-                className="relative h-10 sm:h-12 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
-                style={{ filter: 'brightness(1.1)' }}
-              />
+              <div className="relative flex items-center gap-2 hover:scale-105 transition-transform duration-500 ease-out">
+                <img
+                  src="/images/fevicon.png"
+                  alt=""
+                  className="h-8 sm:h-9 w-auto object-contain"
+                />
+                <span className="text-xl sm:text-2xl font-bold text-white" style={{ fontFamily: "'Comfortaa', cursive" }}>
+                  appwedo
+                </span>
+              </div>
             </a>
 
             {/* Desktop Navigation */}
@@ -174,12 +173,12 @@ export default function Navigation() {
               ref={navContainerRef}
               className="hidden lg:flex items-center relative"
               role="menubar"
-              style={{
-                background: isScrolled ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.04)',
-                border: '1px solid rgba(255,255,255,0.06)',
-                borderRadius: '14px',
-                padding: '4px',
-              }}
+              // style={{
+              //   background: isScrolled ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.04)',
+              //   border: '1px solid rgba(255,255,255,0.06)',
+              //   borderRadius: '14px',
+              //   padding: '4px',
+              // }}
             >
               {/* Sliding active indicator */}
               <div
@@ -377,12 +376,16 @@ export default function Navigation() {
                 background: 'radial-gradient(ellipse 70% 100% at 30% 0%, rgba(139,92,246,0.08) 0%, transparent 70%)',
               }}
             />
-            <img
-              src="/images/appwedo-logo.png"
-              alt="AppWeDo"
-              className="relative h-10 w-auto"
-              style={{ filter: 'brightness(1.1)' }}
-            />
+            <div className="relative flex items-center gap-2">
+              <img
+                src="/images/fevicon.png"
+                alt=""
+                className="h-8 w-auto object-contain"
+              />
+              <span className="text-lg font-bold text-white" style={{ fontFamily: "'Comfortaa', cursive" }}>
+                appwedo
+              </span>
+            </div>
             <button
               onClick={() => setIsMenuOpen(false)}
               className="relative w-10 h-10 flex items-center justify-center rounded-lg transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"

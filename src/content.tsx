@@ -315,6 +315,75 @@ export const siteContent: SiteContent = {
     ],
   },
 
+  team: {
+    label: 'Our Team',
+    headline: 'Qualified Professionals',
+    subheadline:
+      'Meet the talented people behind AppWeDo who turn your ideas into powerful digital products.',
+    members: [
+      {
+        name: 'Mohammad Mizanur Rahman',
+        role: 'CEO',
+        image: 'https://www.appwedo.com/asset/img/team-1.jpg',
+        socials: [
+          { platform: 'facebook', url: '#' },
+          { platform: 'linkedin', url: '#' },
+          { platform: 'twitter', url: '#' },
+        ],
+      },
+      {
+        name: 'S. M. Harun-Or-Rashid',
+        role: 'CTO',
+        image: 'https://www.appwedo.com/asset/img/team-2.jpg',
+        socials: [
+          { platform: 'facebook', url: '#' },
+          { platform: 'linkedin', url: '#' },
+          { platform: 'github', url: '#' },
+        ],
+      },
+      {
+        name: 'Mahabub Sabbir Hasan',
+        role: 'CMO',
+        image: 'https://www.appwedo.com/asset/img/team-3.jpg',
+        socials: [
+          { platform: 'facebook', url: '#' },
+          { platform: 'linkedin', url: '#' },
+          { platform: 'instagram', url: '#' },
+        ],
+      },
+      {
+        name: 'K M Jiaul Islam Jibon',
+        role: 'Full Stack Developer',
+        image: 'https://www.appwedo.com/asset/img/team-4.jpg',
+        socials: [
+          { platform: 'github', url: '#' },
+          { platform: 'linkedin', url: '#' },
+          { platform: 'twitter', url: '#' },
+        ],
+      },
+      {
+        name: 'Bijoy K. Chowdhury',
+        role: 'Consultant',
+        image: 'https://www.appwedo.com/asset/img/team-5.jpg',
+        socials: [
+          { platform: 'facebook', url: '#' },
+          { platform: 'linkedin', url: '#' },
+          { platform: 'twitter', url: '#' },
+        ],
+      },
+      {
+        name: 'Teenat Farzin',
+        role: 'Consultant',
+        image: 'https://www.appwedo.com/asset/img/teenat.jpg',
+        socials: [
+          { platform: 'facebook', url: '#' },
+          { platform: 'linkedin', url: '#' },
+          { platform: 'instagram', url: '#' },
+        ],
+      },
+    ],
+  },
+
   testimonials: {
     label: 'Client Success Stories',
     headline: 'Trusted by Businesses Worldwide',

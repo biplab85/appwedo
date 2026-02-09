@@ -9,6 +9,7 @@ import {
   ActionPlan,
   Products,
   About,
+  Team,
   Testimonials,
   FAQ,
   SpecialOffer,
@@ -36,6 +37,7 @@ function App() {
         <Benefits />
         <ActionPlan />
         <Products />        
+        <Team />
         <Testimonials />
         <FAQ />
         <FinalCTA />
